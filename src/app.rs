@@ -34,7 +34,7 @@ pub fn App() -> impl IntoView {
 
         <Script
             async_="true"
-            src="https://umami.codeboi.dev/script.js"
+            src="https://umami.rehatsingh.cv/script.js"
             attrs=vec![
                 (
                     "data-website-id",
