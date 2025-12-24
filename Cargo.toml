@@ -7,21 +7,21 @@ edition = "2021"
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
-axum = { version = "0.7", optional = true }
-axum-server = { version = "0.6", features = ["tls-rustls"], optional = true }
+axum = { version = "0.8", optional = true }
+axum-server = { version = "0.8", features = ["tls-rustls"], optional = true }
 console_error_panic_hook = "0.1"
 console_log = "1"
 cfg-if = "1"
-leptos = { version = "0.6", features = ["nightly"] }
-leptos_axum = { version = "0.6", optional = true }
-leptos_meta = { version = "0.6", features = ["nightly"] }
-leptos_router = { version = "0.6", features = ["nightly"] }
+leptos = { version = "0.8", features = ["nightly", "nonce"] }
+leptos_axum = { version = "0.8", optional = true }
+leptos_meta = { version = "0.8" }
+leptos_router = { version = "0.8", features = ["nightly"] }
 log = "0.4"
 simple_logger = "4"
 tokio = { version = "1.25", features = ["rt-multi-thread"], optional = true }
 tower = { version = "0.4", optional = true }
 tower-http = { version = "0.5", features = ["fs"], optional = true }
-wasm-bindgen = "0.2"
+wasm-bindgen = "0.2.106"
 thiserror = "1.0"
 tracing = { version = "0.1", optional = true }
 http = "1.0"
@@ -29,13 +29,13 @@ sqlx = { version = "0.7", features = ["runtime-tokio", "tls-native-tls", "postgr
 dotenv_codegen = { version = "0.15", optional = true }
 serde = { version = "1", features = ["derive"] }
 time = { version = "0.3", features = ["serde"] }
-stylers = "1.0.0-alpha"
-leptos_icons = { git = "https://github.com/paul-hansen/leptos-icons.git", branch = "leptos-0.6" }
+stylers = "0.3"
+leptos_icons = "0.7"
 icondata = "0.3"
 
 [features]
 default = ["hydrate", "ssr"]
-hydrate = ["leptos/hydrate", "leptos_meta/hydrate", "leptos_router/hydrate"]
+hydrate = ["leptos/hydrate"]
 ssr = [
     "dep:axum",
     "dep:tokio",
