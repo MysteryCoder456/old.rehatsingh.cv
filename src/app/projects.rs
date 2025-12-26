@@ -1,5 +1,5 @@
 use icondata as i;
-use leptos::*;
+use leptos::prelude::*;
 use leptos_icons::*;
 use leptos_meta::*;
 use serde::{Deserialize, Serialize};
@@ -83,7 +83,7 @@ pub async fn get_pinned_projects() -> Result<Vec<Project>, ServerFnError> {
 
 #[component]
 pub fn Projects() -> impl IntoView {
-    let projects = create_resource(|| (), |_| get_projects());
+    let projects = Resource::new(|| (), |_| get_projects());
 
     view! {
         <Title text="CodeBoi's Projects"/>
@@ -92,7 +92,7 @@ pub fn Projects() -> impl IntoView {
             "< Back"
         </a>
 
-        <h2 align="center">Projects</h2>
+        <h2 style="text-align: center">Projects</h2>
         <div class="projects">
             <Transition fallback=move || view! { <p>"Loading..."</p> }>
                 <ErrorBoundary fallback=move |_| {
@@ -112,9 +112,9 @@ pub fn Projects() -> impl IntoView {
                                                     view! { <ProjectCard project=&project/> }
                                                 }
                                             />
-                                        }
+                                        }.into_any()
                                     }
-                                    Err(e) => view! { <p>{e.to_string()}</p> }.into_view(),
+                                    Err(e) => view! { <p>{e.to_string()}</p> }.into_any(),
                                 }
                             })
                     }}
@@ -127,7 +127,7 @@ pub fn Projects() -> impl IntoView {
 
 #[component]
 pub fn PinnedProjectCard<'a>(project: &'a Project) -> impl IntoView {
-    let style_class = style! {
+    let style_class = style! { "PinnedProjectCard",
         .pinned-project {
             align-items: center;
             margin: 5px 0px;
@@ -171,16 +171,15 @@ pub fn PinnedProjectCard<'a>(project: &'a Project) -> impl IntoView {
                     {if let Some(ref url) = project.url {
                         view! {
                             <a href=url target="_blank">
-                                {&project.name}
+                                {project.name.clone()}
                             </a>
-                        }
-                            .into_view()
+                        }.into_any()
                     } else {
-                        view! { <span>{&project.name}</span> }.into_view()
+                        view! { <span>{project.name.clone()}</span> }.into_any()
                     }}
 
                 </h2>
-                <p>{&project.short_description}</p>
+                <p>{project.short_description.clone()}</p>
             </div>
         </div>
     }
@@ -188,7 +187,7 @@ pub fn PinnedProjectCard<'a>(project: &'a Project) -> impl IntoView {
 
 #[component]
 pub fn ProjectCard<'a>(project: &'a Project) -> impl IntoView {
-    let style_class = style! {
+    let style_class = style! { "ProjectCard",
         .project-card {
             background-color: var(--gunmetal);
             margin: 32px 0px;
@@ -228,17 +227,16 @@ pub fn ProjectCard<'a>(project: &'a Project) -> impl IntoView {
                     {if let Some(ref url) = project.url {
                         view! {
                             <a href=url target="_blank">
-                                {&project.name}
+                                {project.name.clone()}
                             </a>
-                        }
-                            .into_view()
+                        }.into_any()
                     } else {
-                        view! { <span>{&project.name}</span> }.into_view()
+                        view! { <span>{project.name.clone()}</span> }.into_any()
                     }}
 
                 </h2>
 
-                <p>{&project.long_description}</p>
+                <p>{project.long_description.clone()}</p>
 
                 {if let Some(ref technologies) = project.technologies {
                     let tech_icons = technologies
@@ -261,9 +259,9 @@ pub fn ProjectCard<'a>(project: &'a Project) -> impl IntoView {
                         <h3>Tech Stack</h3>
                         <p class="tech-stack">{tech_icons}</p>
                     }
-                        .into_view()
+                    .into_any()
                 } else {
-                    view! {}.into_view()
+                    view! {}.into_any()
                 }}
 
             </div>

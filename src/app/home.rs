@@ -1,5 +1,5 @@
 use icondata as i;
-use leptos::*;
+use leptos::prelude::*;
 use leptos_icons::*;
 use leptos_meta::*;
 use stylers::style;
@@ -8,9 +8,9 @@ use crate::app::projects::{get_pinned_projects, PinnedProjectCard};
 
 #[component]
 pub fn HomePage() -> impl IntoView {
-    let projects = create_resource(|| (), move |_| get_pinned_projects());
+    let projects = Resource::new(|| (), move |_| get_pinned_projects());
 
-    let style_class = style! {
+    let style_class = style! { "HomePage",
         .codeboi-pfp {
             outline: 4px solid rgba(255, 255, 255, 0.3);
             outline-offset: 4px;
@@ -37,7 +37,7 @@ pub fn HomePage() -> impl IntoView {
     view! { class=style_class,
         <Title text="CodeBoi"/>
 
-        <div align="center">
+        <div style="text-align: center">
             <img
                 src="/images/CB.png"
                 alt="CodeBoi's Profile Picture"
@@ -48,7 +48,7 @@ pub fn HomePage() -> impl IntoView {
             <h3 class="muted">"aka rehatbir singh irl ;)"</h3>
         </div>
 
-        <div class="socials" align="center">
+        <div class="socials" style="text-align: center">
             <a href="https://github.com/mysterycoder456" title="GitHub" target="_blank" class="muted">
                 <Icon icon=i::BsGithub width="40px" height="40px"/>
             </a>
@@ -77,13 +77,13 @@ pub fn HomePage() -> impl IntoView {
         <br/>
 
         <h2>"TL;DR"</h2>
-        <div class="content content-border" align="center">
+        <div class="content content-border" style="text-align: center">
             <p>
                 <span>"I'm an undergrad cs major at "</span>
                 <a href="https://www.wisc.edu" target="_blank">"uw-madison"</a>
                 <span>" who"</span>
             </p>
-            <div align="left">
+            <div style="text-align: start">
                 <ul>
                     <li>"likes programming & tech 💻"</li>
                     <li>"plays the guitar 🎸"</li>
@@ -126,9 +126,9 @@ pub fn HomePage() -> impl IntoView {
                                                     view! { <PinnedProjectCard project=&project/> }
                                                 }
                                             />
-                                        }
+                                        }.into_any()
                                     }
-                                    Err(e) => view! { <p>{e.to_string()}</p> }.into_view(),
+                                    Err(e) => view! { <p>{e.to_string()}</p> }.into_any(),
                                 }
                             })
                     }}
@@ -136,7 +136,7 @@ pub fn HomePage() -> impl IntoView {
                 </ErrorBoundary>
             </Transition>
         </div>
-        <div align="center">
+        <div style="text-align: center">
             <a href="/projects">
                 <h3>View More</h3>
             </a>

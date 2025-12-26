@@ -1,10 +1,10 @@
-use leptos::*;
+use leptos::prelude::*;
 use leptos_meta::*;
 use stylers::style;
 
 #[component]
 pub fn BoxCollision() -> impl IntoView {
-    let style_class = style! {
+    let style_class = style! { "BoxCollision",
         #pi-canvas {
             margin-top: 8px;
         }
@@ -19,8 +19,8 @@ pub fn BoxCollision() -> impl IntoView {
         </a>
         <br/>
 
-        <h2 align="center">Box Collisions</h2>
-        <div class="content content-border" align="center">
+        <h2 style="text-align: center">Box Collisions</h2>
+        <div class="content content-border" style="text-align: center">
             <p>
                 A simple simulation where two boxes collide. The number of
                 collisions has an interesting property: they resemble the

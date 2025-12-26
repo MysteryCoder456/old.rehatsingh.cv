@@ -1,7 +1,10 @@
 use crate::error_template::{AppError, ErrorTemplate};
-use leptos::*;
+use leptos::prelude::*;
 use leptos_meta::*;
-use leptos_router::*;
+use leptos_router::{
+    components::{Route, Router, Routes},
+    *,
+};
 
 mod box_collision;
 mod home;
@@ -32,17 +35,6 @@ pub fn App() -> impl IntoView {
         <Link rel="preload" as_="font" href="/fonts/UbuntuMono-Italic.ttf"/>
         <Link rel="preload" as_="font" href="/fonts/UbuntuMono-BoldItalic.ttf"/>
 
-        <Script
-            async_="true"
-            src="https://umami.rehatsingh.cv/script.js"
-            attrs=vec![
-                (
-                    "data-website-id",
-                    Attribute::String("6d05defe-708b-41d7-91c1-40a55ec94f3d".into()),
-                ),
-            ]
-        />
-
         <svg class="bg-design">
             <radialGradient id="Gradient1">
                 <stop offset="0%" stop-color="#00ff61"></stop>
@@ -54,15 +46,15 @@ pub fn App() -> impl IntoView {
 
         <div class="main-container">
             <main>
-                <Router fallback=|| {
-                    let mut outside_errors = Errors::default();
-                    outside_errors.insert_with_default_key(AppError::NotFound);
-                    view! { <ErrorTemplate outside_errors/> }.into_view()
-                }>
-                    <Routes>
-                        <Route path="" view=|| view! { <HomePage/> }/>
-                        <Route path="/projects" view=|| view! { <Projects/> }/>
-                        <Route path="/box" view=|| view! { <BoxCollision/> }/>
+                <Router>
+                    <Routes fallback=|| {
+                        let mut outside_errors = Errors::default();
+                        outside_errors.insert_with_default_key(AppError::NotFound);
+                        view! { <ErrorTemplate outside_errors/> }.into_view()
+                    }>
+                        <Route path=path!("") view=|| view! { <HomePage/> }/>
+                        <Route path=path!("/projects") view=|| view! { <Projects/> }/>
+                        <Route path=path!("/box") view=|| view! { <BoxCollision/> }/>
                     </Routes>
                 </Router>
             </main>
