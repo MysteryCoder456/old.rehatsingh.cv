@@ -29,9 +29,10 @@ sqlx = { version = "0.7", features = ["runtime-tokio", "tls-native-tls", "postgr
 dotenv_codegen = { version = "0.15", optional = true }
 serde = { version = "1", features = ["derive"] }
 time = { version = "0.3", features = ["serde"] }
-stylers = "0.3"
+stylers = "1.0.0-alpha"
 leptos_icons = "0.7"
 icondata = "0.3"
+getrandom = { version = "0.2.16", features = ["js"] }
 
 [features]
 default = ["hydrate", "ssr"]
